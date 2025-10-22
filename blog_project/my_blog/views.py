@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from my_blog.models import Post,Comment
-from django.views.generic import (TemplateView, ListView)
+from django.views.generic import (TemplateView, ListView,DetailView)
 # Create your views here.
 
 class AboutView(TemplateView):
@@ -12,3 +12,7 @@ class PostListView(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+
+class PostDetailView(DetailView):
+    model = Post
+    
