@@ -22,4 +22,6 @@ from django import views
 urlpatterns = [
     path('',include('my_blog.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/login',views.login,name='login'),
+    path('accounts/logout',views.logout,name='logout',kwargs={'next_page':'/'}),
 ]
