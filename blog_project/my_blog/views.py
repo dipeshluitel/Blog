@@ -65,3 +65,22 @@ def add_comment_to_post(request, pk):
         else:
             form = CommentForm()
         return render(request, 'my_blog/comment_form.html', {'form':form})
+    
+@login_required
+def post_publish(request, pk):
+    post = get_object_or_404(Post,pk=pk)
+    post.publish
+    return redirect('post_details',pk=pk)
+    
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk = pk)
+    comment.approve()
+    return redirect('post_details',pk=comment.post.pk)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk = pk)
+    post_pk = comment.post.pk   
+    comment.delete()
+    return redirect('post_detail', pk=post_pk)
