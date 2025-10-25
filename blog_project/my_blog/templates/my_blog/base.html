@@ -72,7 +72,12 @@
         </ul>
       </div>
     </nav>
-
+    <!-- Content BLock -->
     <div class="container content"></div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blog_post">{% block content %} {% endblock %}</div>
+      </div>
+    </div>
   </body>
 </html>
