@@ -40,6 +40,11 @@
   <a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
     ><span class="material-symbols-outlined">check</span>
   </a>
-  {% endif %} {% endif %} {% endfor %}
+  {% endif %}
+  <p>{{comment.text|safe|linebreaks}}</p>
+  <p>Posted By: {{comment.author}}</p>
+  {% endif %} {% empty %}
+  <p>No comments</p>
+  {% endfor %}
 </div>
 {% endif %} {% endblock %}
