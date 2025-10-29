@@ -1,1 +1,45 @@
-{% extends "my_blog/base.html" %} {% block content %}{% endblock %}
+{% extends "my_blog/base.html" %}
+<!--icon -->
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+/>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+</style>
+{% block content %}
+<h1 class="posttitle loader">{{post.title}}</h1>
+{% if post.published_date %}
+<div class="date postdate">{{post.published_date}}</div>
+{% else %}
+<a href="{% url 'post_publish' pk=post.pk%}" class="btn btn-default">Publish</a>
+{% endif %}
+<p class="postcontent">{{post.title|safe|linebreaksbr}}</p>
+
+{% if user.is_authenticated %}
+<a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
+  ><span class="material-symbols-outlined"> edit </span></a
+>
+<a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
+  ><span class="material-symbols-outlined">remove</span>
+</a>
+<hr />
+<a class="btn btn-primary" href="{% url 'add_comment_to_post' pk=post.pk%}"
+  >Add Comments</a
+>
+<div class="container">
+  {% for comment in post.comments.all %}
+  <br />
+  {% if user.is_authenticated or comment.approved_comment %}
+  {{comment.created_date}} {% if not comment.approved_comment %}
+  <a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
+    ><span class="material-symbols-outlined"> remove </span></a
+  >
+  <a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
+    ><span class="material-symbols-outlined">check</span>
+  </a>
+  {% endif %} {% endif %} {% endfor %}
+</div>
+{% endif %} {% endblock %}
