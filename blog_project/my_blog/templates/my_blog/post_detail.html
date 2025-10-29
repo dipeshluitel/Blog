@@ -22,7 +22,7 @@
 <a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
   ><span class="material-symbols-outlined"> edit </span></a
 >
-<a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
+<a href="{%url 'post_remove' pk=post.pk%}" class="btn btn-primary"
   ><span class="material-symbols-outlined">remove</span>
 </a>
 <hr />
@@ -34,10 +34,10 @@
   <br />
   {% if user.is_authenticated or comment.approved_comment %}
   {{comment.created_date}} {% if not comment.approved_comment %}
-  <a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
+  <a href="{%url 'comment_remove' pk=post.pk%}" class="btn btn-primary"
     ><span class="material-symbols-outlined"> remove </span></a
   >
-  <a href="{%url 'post_edit' pk=post.pk%}" class="btn btn-primary"
+  <a href="{%url 'comment_approve' pk=post.pk%}" class="btn btn-primary"
     ><span class="material-symbols-outlined">check</span>
   </a>
   {% endif %}
