@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin  # in place of decorators for CBV
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (TemplateView, ListView,DetailView,CreateView,UpdateView,DeleteView)
+from django.contrib.auth import logout
 # Create your views here.
 
 class AboutView(TemplateView):
@@ -62,14 +63,14 @@ def add_comment_to_post(request, pk):
             comment.save()
             return redirect('post_detail', pk=post.pk)
         
-        else:
-            form = CommentForm()
+    else:
+        form = CommentForm()
     return render(request, 'my_blog/comment_form.html', {'form':form})
     
 @login_required
 def post_publish(request, pk):
     post = get_object_or_404(Post,pk=pk)
-    post.publish
+    post.publish()
     return redirect('post_detail',pk=pk)
     
 @login_required
@@ -84,3 +85,8 @@ def comment_remove(request, pk):
     post_pk = comment.post.pk   
     comment.delete()
     return redirect('post_detail', pk=post_pk)
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('post_list')
